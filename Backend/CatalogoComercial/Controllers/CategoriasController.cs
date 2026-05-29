@@ -1,4 +1,5 @@
 ﻿using CatalogoComercial.Api.Data;
+using CatalogoComercial.Api.Dtos;
 using CatalogoComercial.Api.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -17,43 +18,54 @@ public class CategoriasController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> CreateCategoria([FromBody] Categoria categoria)
+    public async Task<IActionResult> CreateCategoria(CategoriaRequest request)
     {
-        if (categoria == null)
+        var categoria = new Categoria
         {
-            return BadRequest("Dados da categoria inválidos.");
-        }
+            Nome = request.Nome,
+            Descricao = request.Descricao
+        };
 
         _context.Categorias.Add(categoria);
         await _context.SaveChangesAsync();
-        return Created("", categoria);
+
+        var categoriaDto = new CategoriaDto
+        {
+            Nome = categoria.Nome,
+            Descricao = categoria.Descricao
+        };
+
+        return Created("", categoriaDto);
     }
 
     [HttpGet]
     public async Task<IActionResult> GetCategorias()
     {
-        var categorias = await _context.Categorias.ToListAsync();
+        var categorias = await _context.Categorias
+            .Select(c => new CategoriaDto
+            {
+                Id = c.Id,
+                Nome = c.Nome,
+                Descricao = c.Descricao
+            })
+            .ToListAsync();
+
         return Ok(categorias);
     }
 
     [HttpPut("{id}")]
-    public async Task<IActionResult> UpdateCategoria(int id, [FromBody] Categoria categoria)
+    public async Task<IActionResult> UpdateCategoria(int id, CategoriaRequest request)
     {
-        if (categoria.Id != id)
-        {
-            return BadRequest("O ID da categoria no corpo da requisição deve corresponder ao ID na URL.");
-        }
-
-        var updateCategoria = await _context.Categorias
+        var categoria = await _context.Categorias
             .FirstOrDefaultAsync(c => c.Id == id);
         
-        if (updateCategoria == null)
+        if (categoria == null)
         {
             return NotFound("Categoria não encontrada.");
         }
-        
-        updateCategoria.Nome = categoria.Nome;
-        updateCategoria.Descricao = categoria.Descricao;
+
+        categoria.Nome = request.Nome;
+        categoria.Descricao = request.Descricao;
         await _context.SaveChangesAsync();
 
         return NoContent();
