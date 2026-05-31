@@ -53,7 +53,7 @@ async function salvarCategoria() {
                 descricao: form.descricao
             }
         }
-        mostrarToast('Produto atualizado com sucesso!', 'sucesso')
+        mostrarToast('Categoria atualizada com sucesso!', 'sucesso')
     } else {
         const novaCategoria = await $fetch<Categoria>(apiUrl, {
             method: 'POST',
@@ -61,7 +61,7 @@ async function salvarCategoria() {
         })
 
         categorias.value.push(novaCategoria)
-        mostrarToast('Produto cadastrado com sucesso!', 'sucesso')
+        mostrarToast('Categoria cadastrada com sucesso!', 'sucesso')
     }
 
     limparFormulario()
@@ -77,7 +77,7 @@ function editarCategoria(categoria: Categoria) {
 
 async function excluirCategoria(id: number) {
   erro.value = ''
-  const confirmou = confirm('Deseja realmente excluir esta categoria?')
+  const confirmou = (globalThis as any).confirm('Deseja realmente excluir esta categoria?')
 
   if (!confirmou) return
 
@@ -86,10 +86,10 @@ async function excluirCategoria(id: number) {
       method: 'DELETE'
     })
 
-    mostrarToast('Produto excluído com sucesso!', 'sucesso')
+    mostrarToast('Categoria excluída com sucesso!', 'sucesso')
     categorias.value = categorias.value.filter(c => c.id !== id)
   } catch (error: any) {
-    mostrarToast('Erro ao excluir categoria.', 'erro')
+    mostrarToast(error?.data || 'Erro ao excluir categoria.', 'erro')
   }
 }
 

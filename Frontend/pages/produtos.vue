@@ -120,7 +120,7 @@ function editarProduto(produto: Produto)
 
 async function excluirProduto(id: number) {
   erro.value = ''
-  const confirmou = confirm('Deseja realmente excluir este produto?')
+  const confirmou = (globalThis as any).confirm('Deseja realmente excluir este produto?')
 
   if (!confirmou) return
 
