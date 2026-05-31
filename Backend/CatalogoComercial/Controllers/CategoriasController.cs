@@ -31,6 +31,7 @@ public class CategoriasController : ControllerBase
 
         var categoriaDto = new CategoriaDto
         {
+            Id = categoria.Id,
             Nome = categoria.Nome,
             Descricao = categoria.Descricao
         };

@@ -41,11 +41,18 @@ public class ProdutosController : ControllerBase
 
         var produtoDto = new ProdutoDto
         {
+            Id = produto.Id,
             Nome = produto.Nome,
             Descricao = produto.Descricao,
             Preco = produto.Preco,
-            CategoriaId = produto.CategoriaId
-         };
+            CategoriaId = produto.CategoriaId,
+            Categoria = new CategoriaDto
+            {
+                Id = categoria.Id,
+                Nome = categoria.Nome,
+                Descricao = categoria.Descricao
+            }
+        };
 
         return Created("", produtoDto);
     }
