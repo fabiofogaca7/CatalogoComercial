@@ -62,7 +62,7 @@ Frontend/
 Ajuste a Connection String no arquivo:
 
 ```text
-Backend/CatalogoComercial.Api/appsettings.json
+Backend/appsettings.json
 ```
 
 Exemplo:
@@ -82,7 +82,7 @@ Exemplo:
 Acesse a pasta da API:
 
 ```bash
-cd Backend/CatalogoComercial.Api
+cd Backend
 ```
 
 Restaurar pacotes:
