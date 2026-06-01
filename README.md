@@ -44,6 +44,13 @@ Projeto Full Stack desenvolvido como desafio técnico utilizando ASP.NET Core 8,
 
 ---
 
+## Documentação do desafio
+
+- [Modelagem de Dados](./docs/modelagem-dados.md)
+- [Protótipo de Interface](./docs/prototipo-interface.md)
+
+---
+
 ## Estrutura do Projeto
 
 ```text
